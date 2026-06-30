@@ -1,0 +1,10 @@
+target/
+.jmeter/
+dist/
+out/
+results/
+*.jtl
+jmeter.log
+.DS_Store
+.idea/
+*.iml

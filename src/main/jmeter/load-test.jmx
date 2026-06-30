@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.6.3">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="JMeter + JUnit Load Test" enabled="true">
+      <stringProp name="TestPlan.comments">JMeter drives load; JUnitSampler invokes com.example.load.LoadTest methods.</stringProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">true</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+      <stringProp name="TestPlan.user_define_classpath"></stringProp>
+      <boolProp name="TestPlan.tearDown_on_shutdown">true</boolProp>
+    </TestPlan>
+    <hashTree>
+      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments">
+          <elementProp name="START_EMBEDDED_SERVER" elementType="Argument">
+            <stringProp name="Argument.name">START_EMBEDDED_SERVER</stringProp>
+            <stringProp name="Argument.value">${__P(START_EMBEDDED_SERVER,true)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="EMBEDDED_PORT" elementType="Argument">
+            <stringProp name="Argument.name">EMBEDDED_PORT</stringProp>
+            <stringProp name="Argument.value">${__P(EMBEDDED_PORT,18150)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="TARGET_BASE_URL" elementType="Argument">
+            <stringProp name="Argument.name">TARGET_BASE_URL</stringProp>
+            <stringProp name="Argument.value">${__P(TARGET_BASE_URL,http://localhost:18150)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="THREAD_NUMBER" elementType="Argument">
+            <stringProp name="Argument.name">THREAD_NUMBER</stringProp>
+            <stringProp name="Argument.value">${__P(THREAD_NUMBER,10)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="DURATION_SECONDS" elementType="Argument">
+            <stringProp name="Argument.name">DURATION_SECONDS</stringProp>
+            <stringProp name="Argument.value">${__P(DURATION_SECONDS,120)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="RAMP_SECONDS" elementType="Argument">
+            <stringProp name="Argument.name">RAMP_SECONDS</stringProp>
+            <stringProp name="Argument.value">${__P(RAMP_SECONDS,15)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="THINK_TIME_MS" elementType="Argument">
+            <stringProp name="Argument.name">THINK_TIME_MS</stringProp>
+            <stringProp name="Argument.value">${__P(THINK_TIME_MS,200)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="SCENARIO" elementType="Argument">
+            <stringProp name="Argument.name">SCENARIO</stringProp>
+            <stringProp name="Argument.value">${__P(SCENARIO,All)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="CRUD_THROUGHPUT" elementType="Argument">
+            <stringProp name="Argument.name">CRUD_THROUGHPUT</stringProp>
+            <stringProp name="Argument.value">${__P(CRUD_THROUGHPUT,10)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="READ_THROUGHPUT" elementType="Argument">
+            <stringProp name="Argument.name">READ_THROUGHPUT</stringProp>
+            <stringProp name="Argument.value">${__P(READ_THROUGHPUT,90)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="RESOURCE_COUNT" elementType="Argument">
+            <stringProp name="Argument.name">RESOURCE_COUNT</stringProp>
+            <stringProp name="Argument.value">${__P(RESOURCE_COUNT,200)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="PERCENTAGE_404" elementType="Argument">
+            <stringProp name="Argument.name">PERCENTAGE_404</stringProp>
+            <stringProp name="Argument.value">${__P(PERCENTAGE_404,25)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="STEP_DELAY_MS" elementType="Argument">
+            <stringProp name="Argument.name">STEP_DELAY_MS</stringProp>
+            <stringProp name="Argument.value">${__P(STEP_DELAY_MS,500)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="SLA" elementType="Argument">
+            <stringProp name="Argument.name">SLA</stringProp>
+            <stringProp name="Argument.value">${__P(SLA,60000)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+        </collectionProp>
+      </Arguments>
+      <hashTree/>
+
+      <SetupThreadGroup guiclass="SetupThreadGroupGui" testclass="SetupThreadGroup" testname="1. Setup (init)" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">1</stringProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+      </SetupThreadGroup>
+      <hashTree>
+        <JUnitSampler guiclass="JUnitTestSamplerGui" testclass="JUnitSampler" testname="init" enabled="true">
+          <stringProp name="junitSampler.classname">com.example.load.LoadTest</stringProp>
+          <stringProp name="junitsampler.constructorstring"></stringProp>
+          <stringProp name="junitsampler.method">init</stringProp>
+          <stringProp name="junitsampler.pkg.filter"></stringProp>
+          <stringProp name="junitsampler.success">Test successful</stringProp>
+          <stringProp name="junitsampler.success.code">1000</stringProp>
+          <stringProp name="junitsampler.failure">Test failed</stringProp>
+          <stringProp name="junitsampler.failure.code">0001</stringProp>
+          <stringProp name="junitsampler.error">An unexpected error occurred</stringProp>
+          <stringProp name="junitsampler.error.code">9999</stringProp>
+          <stringProp name="junitsampler.exec.setup">false</stringProp>
+          <stringProp name="junitsampler.append.error">false</stringProp>
+          <stringProp name="junitsampler.append.exception">false</stringProp>
+          <boolProp name="junitsampler.junit4">true</boolProp>
+        </JUnitSampler>
+        <hashTree/>
+      </hashTree>
+
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="2. Create baseline data" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">1</stringProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+        <boolProp name="ThreadGroup.delayedStart">true</boolProp>
+      </ThreadGroup>
+      <hashTree>
+        <JUnitSampler guiclass="JUnitTestSamplerGui" testclass="JUnitSampler" testname="setUpData" enabled="true">
+          <stringProp name="junitSampler.classname">com.example.load.LoadTest</stringProp>
+          <stringProp name="junitsampler.constructorstring"></stringProp>
+          <stringProp name="junitsampler.method">setUpData</stringProp>
+          <stringProp name="junitsampler.pkg.filter"></stringProp>
+          <stringProp name="junitsampler.success">Test successful</stringProp>
+          <stringProp name="junitsampler.success.code">1000</stringProp>
+          <stringProp name="junitsampler.failure">Test failed</stringProp>
+          <stringProp name="junitsampler.failure.code">0001</stringProp>
+          <stringProp name="junitsampler.error">An unexpected error occurred</stringProp>
+          <stringProp name="junitsampler.error.code">9999</stringProp>
+          <stringProp name="junitsampler.exec.setup">false</stringProp>
+          <stringProp name="junitsampler.append.error">false</stringProp>
+          <stringProp name="junitsampler.append.exception">false</stringProp>
+          <boolProp name="junitsampler.junit4">true</boolProp>
+        </JUnitSampler>
+        <hashTree/>
+      </hashTree>
+
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="3. Load" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">true</boolProp>
+          <intProp name="LoopController.loops">-1</intProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">${__P(THREAD_NUMBER,10)}</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">${__P(RAMP_SECONDS,15)}</stringProp>
+        <boolProp name="ThreadGroup.scheduler">true</boolProp>
+        <stringProp name="ThreadGroup.duration">${__P(DURATION_SECONDS,120)}</stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+        <boolProp name="ThreadGroup.delayedStart">true</boolProp>
+      </ThreadGroup>
+      <hashTree>
+        <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Think Time" enabled="true">
+          <stringProp name="ConstantTimer.delay">${__P(THINK_TIME_MS,200)}</stringProp>
+        </ConstantTimer>
+        <hashTree/>
+        <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If CRUD scenario" enabled="true">
+          <stringProp name="IfController.condition">${__groovy(&quot;${SCENARIO}&quot; == &quot;All&quot; || &quot;${SCENARIO}&quot; == &quot;Crud&quot;)}</stringProp>
+          <boolProp name="IfController.evaluateAll">false</boolProp>
+          <boolProp name="IfController.useExpression">true</boolProp>
+        </IfController>
+        <hashTree>
+          <ThroughputController guiclass="ThroughputControllerGui" testclass="ThroughputController" testname="CRUD Throughput" enabled="true">
+            <intProp name="ThroughputController.style">1</intProp>
+            <boolProp name="ThroughputController.perThread">false</boolProp>
+            <intProp name="ThroughputController.maxThroughput">1</intProp>
+            <stringProp name="ThroughputController.percentThroughput">${__P(CRUD_THROUGHPUT,10)}</stringProp>
+          </ThroughputController>
+          <hashTree>
+            <JUnitSampler guiclass="JUnitTestSamplerGui" testclass="JUnitSampler" testname="crudScenario" enabled="true">
+              <stringProp name="junitSampler.classname">com.example.load.LoadTest</stringProp>
+              <stringProp name="junitsampler.constructorstring"></stringProp>
+              <stringProp name="junitsampler.method">crudScenario</stringProp>
+              <stringProp name="junitsampler.pkg.filter"></stringProp>
+              <stringProp name="junitsampler.success">Test successful</stringProp>
+              <stringProp name="junitsampler.success.code">1000</stringProp>
+              <stringProp name="junitsampler.failure">Test failed</stringProp>
+              <stringProp name="junitsampler.failure.code">0001</stringProp>
+              <stringProp name="junitsampler.error">An unexpected error occurred</stringProp>
+              <stringProp name="junitsampler.error.code">9999</stringProp>
+              <stringProp name="junitsampler.exec.setup">false</stringProp>
+              <stringProp name="junitsampler.append.error">false</stringProp>
+              <stringProp name="junitsampler.append.exception">false</stringProp>
+              <boolProp name="junitsampler.junit4">true</boolProp>
+            </JUnitSampler>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+        <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If Read scenario" enabled="true">
+          <stringProp name="IfController.condition">${__groovy(&quot;${SCENARIO}&quot; == &quot;All&quot; || &quot;${SCENARIO}&quot; == &quot;Read&quot;)}</stringProp>
+          <boolProp name="IfController.evaluateAll">false</boolProp>
+          <boolProp name="IfController.useExpression">true</boolProp>
+        </IfController>
+        <hashTree>
+          <ThroughputController guiclass="ThroughputControllerGui" testclass="ThroughputController" testname="Read Throughput" enabled="true">
+            <intProp name="ThroughputController.style">1</intProp>
+            <boolProp name="ThroughputController.perThread">false</boolProp>
+            <intProp name="ThroughputController.maxThroughput">1</intProp>
+            <stringProp name="ThroughputController.percentThroughput">${__P(READ_THROUGHPUT,90)}</stringProp>
+          </ThroughputController>
+          <hashTree>
+            <JUnitSampler guiclass="JUnitTestSamplerGui" testclass="JUnitSampler" testname="readScenario" enabled="true">
+              <stringProp name="junitSampler.classname">com.example.load.LoadTest</stringProp>
+              <stringProp name="junitsampler.constructorstring"></stringProp>
+              <stringProp name="junitsampler.method">readScenario</stringProp>
+              <stringProp name="junitsampler.pkg.filter"></stringProp>
+              <stringProp name="junitsampler.success">Test successful</stringProp>
+              <stringProp name="junitsampler.success.code">1000</stringProp>
+              <stringProp name="junitsampler.failure">Test failed</stringProp>
+              <stringProp name="junitsampler.failure.code">0001</stringProp>
+              <stringProp name="junitsampler.error">An unexpected error occurred</stringProp>
+              <stringProp name="junitsampler.error.code">9999</stringProp>
+              <stringProp name="junitsampler.exec.setup">false</stringProp>
+              <stringProp name="junitsampler.append.error">false</stringProp>
+              <stringProp name="junitsampler.append.exception">false</stringProp>
+              <boolProp name="junitsampler.junit4">true</boolProp>
+            </JUnitSampler>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+      </hashTree>
+
+      <PostThreadGroup guiclass="PostThreadGroupGui" testclass="PostThreadGroup" testname="4. Teardown" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">1</stringProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+      </PostThreadGroup>
+      <hashTree>
+        <JUnitSampler guiclass="JUnitTestSamplerGui" testclass="JUnitSampler" testname="teardown" enabled="true">
+          <stringProp name="junitSampler.classname">com.example.load.LoadTest</stringProp>
+          <stringProp name="junitsampler.constructorstring"></stringProp>
+          <stringProp name="junitsampler.method">teardown</stringProp>
+          <stringProp name="junitsampler.pkg.filter"></stringProp>
+          <stringProp name="junitsampler.success">Test successful</stringProp>
+          <stringProp name="junitsampler.success.code">1000</stringProp>
+          <stringProp name="junitsampler.failure">Test failed</stringProp>
+          <stringProp name="junitsampler.failure.code">0001</stringProp>
+          <stringProp name="junitsampler.error">An unexpected error occurred</stringProp>
+          <stringProp name="junitsampler.error.code">9999</stringProp>
+          <stringProp name="junitsampler.exec.setup">false</stringProp>
+          <stringProp name="junitsampler.append.error">false</stringProp>
+          <stringProp name="junitsampler.append.exception">false</stringProp>
+          <boolProp name="junitsampler.junit4">true</boolProp>
+        </JUnitSampler>
+        <hashTree/>
+      </hashTree>
+
+      <DurationAssertion guiclass="DurationAssertionGui" testclass="DurationAssertion" testname="Per-sample SLA" enabled="true">
+        <stringProp name="DurationAssertion.duration">${__P(SLA,60000)}</stringProp>
+      </DurationAssertion>
+      <hashTree/>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>

@@ -1,0 +1,13 @@
+# Keep the build context small and reproducible.
+.git
+.gitignore
+target/
+.jmeter/
+out/
+results/
+dist/
+*.zip
+*.jtl
+*.log
+README.md
+**/.DS_Store
